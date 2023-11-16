@@ -8,7 +8,7 @@ public class Symbol : MonoBehaviour
     SymbolEnum symbol;
 
     [SerializeField]
-    private bool IsPlayer;
+    public bool IsPlayer;
 
     [SerializeField]
     private float changeInterval;
