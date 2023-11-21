@@ -5,7 +5,9 @@ using UnityEngine;
 public class Symbol : MonoBehaviour
 {
 
-    SymbolEnum symbol;
+    private SymbolEnum symbol;
+
+    public SymbolEnum CurrentSymbol => symbol;
 
     [SerializeField]
     public bool IsPlayer;

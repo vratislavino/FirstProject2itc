@@ -8,16 +8,23 @@ public class StateManager : MonoBehaviour
 {
     State currentState;
 
-    // Start is called before the first frame update
     void Start()
     {
         var player = FindObjectsOfType<Symbol>().ToList().First(symbol => symbol.IsPlayer);
-        currentState = new IdleState(player.transform, GetComponent<NavMeshAgent>());
+        currentState = new IdleState(player, GetComponent<NavMeshAgent>());
+        currentState.InitState();
+
+        Debug.Log(player);
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        currentState.Update();
+        var newState = currentState.TryToGetNewState();
+        if (newState == null)
+            return;
+
+        currentState = newState;
+        currentState.InitState();
     }
 }

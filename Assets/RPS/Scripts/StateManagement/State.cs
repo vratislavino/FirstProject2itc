@@ -3,13 +3,15 @@ using UnityEngine.AI;
 
 public abstract class State
 {
-
-    protected Transform playerReference;
     protected NavMeshAgent agent;
 
-    public State(Transform player, NavMeshAgent agent) {
-        this.playerReference = player;
+    protected Symbol playerSymbol;
+    protected Symbol thisSymbol;
+
+    public State(Symbol player, NavMeshAgent agent) {
+        this.playerSymbol = player;
         this.agent = agent;
+        thisSymbol = agent.GetComponent<Symbol>();
     }
 
     public abstract void InitState();
