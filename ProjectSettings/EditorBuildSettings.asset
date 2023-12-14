@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Vrata/Vrata.unity
+    guid: 072a2b0851770f1499746d40140f829b
   m_configObjects: {}

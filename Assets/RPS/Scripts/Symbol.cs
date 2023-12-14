@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Symbol : MonoBehaviour
 {
+    [SerializeField]
+    int maxLives;
+    
+    int lives;
 
     private SymbolEnum symbol;
 
@@ -24,6 +28,8 @@ public class Symbol : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        lives = maxLives;
+
         ChangeSymbol(GetRandomSymbol());
         if (IsPlayer) {
             StartCoroutine(ChangeSymbolRoutine());
@@ -54,9 +60,16 @@ public class Symbol : MonoBehaviour
         if (!enemy) return;
 
         var wouldWin = symbol.WouldWin(enemy.symbol);
-        if (wouldWin.HasValue && wouldWin.Value) {
-            Destroy(enemy.gameObject);
-        }
+        if (wouldWin.HasValue) {
+            if(wouldWin.Value) {
+                Destroy(enemy.gameObject);
+            } else {
+                lives--;
+                if(lives == 0) {
+                    Destroy(gameObject);
+                }
+            }
+        } 
     }
 }
 
