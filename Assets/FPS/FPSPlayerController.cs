@@ -15,6 +15,9 @@ public class FPSPlayerController : MonoBehaviour
 
     Rigidbody rb;
 
+    [SerializeField] Transform groundChecker;
+    bool isGrounded = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,22 +28,36 @@ public class FPSPlayerController : MonoBehaviour
 
     // Update is called once per frame
     void Update() {
+        CheckGrounded();
         DoRotation();
         DoMovement();
+    }
+
+    private void CheckGrounded()
+    {
+        if(Physics.Raycast(groundChecker.position, Vector3.down, 0.01f))
+        {
+            isGrounded = true;
+        } else
+        {
+            isGrounded = false;
+        }
     }
 
     private void DoMovement() {
         float hor = Input.GetAxis("Horizontal");
         float ver = Input.GetAxis("Vertical");
 
+        float currentSpeed = Input.GetButton("Sprint") ? speed * 2 : speed;
+
         var dir = new Vector3(hor, rb.velocity.y, ver); // svìtový movement
         var move = Quaternion.Euler(0, transform.eulerAngles.y, 0) * dir; // local -> global
 
-        if(Input.GetButtonDown("Jump")) {
+        if(Input.GetButtonDown("Jump") && isGrounded) {
             move.y = jumpSpeed;
         }
 
-        rb.velocity = new Vector3(move.x * speed, move.y, move.z * speed);
+        rb.velocity = new Vector3(move.x * currentSpeed, move.y, move.z * currentSpeed);
     }
 
     private void DoRotation() {
