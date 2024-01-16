@@ -8,12 +8,16 @@ public class FPSPlayerController : MonoBehaviour
     Vector3 rotation;
     Vector3 cameraRotation;
 
+    private float envSpeedMult = 1;
+
     [SerializeField] float sensitivity = 3f;
     [SerializeField] float speed = 50f;
     [SerializeField] float jumpSpeed = 1f;
     [SerializeField] Transform cameraHolder;
 
     Rigidbody rb;
+    public Rigidbody Rigidbody => rb;
+
 
     [SerializeField] Transform groundChecker;
     bool isGrounded = false;
@@ -50,6 +54,8 @@ public class FPSPlayerController : MonoBehaviour
 
         float currentSpeed = Input.GetButton("Sprint") ? speed * 2 : speed;
 
+        currentSpeed *= envSpeedMult;
+
         var dir = new Vector3(hor, rb.velocity.y, ver); // svìtový movement
         var move = Quaternion.Euler(0, transform.eulerAngles.y, 0) * dir; // local -> global
 
@@ -71,5 +77,10 @@ public class FPSPlayerController : MonoBehaviour
 
         transform.rotation = Quaternion.Euler(rotation);
         cameraHolder.localRotation = Quaternion.Euler(cameraRotation);
+    }
+
+    public void ChangeEnvironmentSpeedMult(float newSpeed)
+    {
+        envSpeedMult = newSpeed;
     }
 }
