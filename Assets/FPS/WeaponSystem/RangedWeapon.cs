@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
-public abstract class Weapon : MonoBehaviour
+public abstract class RangedWeapon : Weapon
 {
     [SerializeField] protected int MaxAmmo;
     protected int currentAmmo;
@@ -17,37 +18,40 @@ public abstract class Weapon : MonoBehaviour
 
     [SerializeField] protected Transform BulletPoint;
 
-    public virtual void Start()
+    [SerializeField] protected Rigidbody BulletPrefab;
+
+    public override void Start()
     {
-        
+        base.Start();
+        currentAmmo = MaxAmmo;
     }
 
     void Update()
     {
         // check reload
-        CheckInput();
+        
         // fireCooldown update
     }
 
-    protected virtual void CheckInput()
-    {
-        if (Input.GetButtonDown("Fire1"))
-        {
-            // ?? TryToShoot
-            if (IsPossibleToShoot())
-            {
-                Shoot();
-            }
-        }
-    }
 
     protected virtual bool IsPossibleToShoot()
     {
         return currentAmmo > 0 && !IsReloading;
     }
 
+    public override void Attack()
+    {
+        if (IsPossibleToShoot())
+        {
+            Shoot();
+            currentAmmo--;
+        }
+    }
+
     protected virtual void Shoot()
     {
-
+        var bullet = Instantiate(BulletPrefab, BulletPoint.position, transform.rotation);
+        bullet.AddForce(bullet.transform.forward * 100, ForceMode.Impulse);
+        Destroy(bullet.gameObject, 4f);
     }
 }
