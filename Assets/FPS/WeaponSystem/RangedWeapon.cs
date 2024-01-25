@@ -24,19 +24,32 @@ public abstract class RangedWeapon : Weapon
     {
         base.Start();
         currentAmmo = MaxAmmo;
+        UsesControl = Input.GetButtonDown;
     }
 
     void Update()
     {
-        // check reload
-        
+        if(Input.GetButtonDown("Reload"))
+        {
+            currentReloadProgress = ReloadSpeed;
+        }
+        if(currentReloadProgress > 0)
+        {
+            currentReloadProgress -= Time.deltaTime;
+            if(currentReloadProgress <= 0)
+            {
+                currentAmmo = MaxAmmo;
+            }
+        }
+
         // fireCooldown update
+        fireCooldown -= Time.deltaTime;
     }
 
 
     protected virtual bool IsPossibleToShoot()
     {
-        return currentAmmo > 0 && !IsReloading;
+        return currentAmmo > 0 && !IsReloading && fireCooldown <= 0;
     }
 
     public override void Attack()
@@ -44,6 +57,7 @@ public abstract class RangedWeapon : Weapon
         if (IsPossibleToShoot())
         {
             Shoot();
+            fireCooldown = FireRate;
             currentAmmo--;
         }
     }

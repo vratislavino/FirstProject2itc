@@ -15,9 +15,8 @@ public class Shotgun : RangedWeapon
         for (int i = 0; i < bulletCount; i++)
         {
             var bullet = Instantiate(BulletPrefab, BulletPoint.position, transform.rotation);
-            Debug.Log(bullet.transform.forward + " : " + GetDirection(bullet.transform.forward));
-            
-            bullet.AddForce(GetDirection(bullet.transform.forward) * 100, ForceMode.Impulse);
+            bullet.transform.Rotate(Random.Range(-spread, spread), Random.Range(-spread, spread), 0);
+            bullet.AddForce(bullet.transform.forward * 100, ForceMode.Impulse);
             Destroy(bullet.gameObject, 4f);
         }
     }
