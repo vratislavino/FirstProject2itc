@@ -46,10 +46,10 @@ public class WeaponController : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
+    {/*
         if(currentWeapon.UsesControl("Fire1"))
         {
             currentWeapon.Attack();
-        }
+        }*/
     }
 }
