@@ -9,7 +9,6 @@ public abstract class RangedWeapon : Weapon
     protected int currentAmmo;
     [SerializeField] protected float ReloadSpeed;
     protected float currentReloadProgress = 0;
-    public bool IsReloading => currentReloadProgress > 0;
 
     [SerializeField] protected int Damage;
 
@@ -32,6 +31,7 @@ public abstract class RangedWeapon : Weapon
         if(Input.GetButtonDown("Reload"))
         {
             currentReloadProgress = ReloadSpeed;
+            RaisePossibleToAttackChanged(false);
         }
         if(currentReloadProgress > 0)
         {
@@ -39,6 +39,7 @@ public abstract class RangedWeapon : Weapon
             if(currentReloadProgress <= 0)
             {
                 currentAmmo = MaxAmmo;
+                RaisePossibleToAttackChanged(true);
             }
         }
 
@@ -46,10 +47,24 @@ public abstract class RangedWeapon : Weapon
         fireCooldown -= Time.deltaTime;
     }
 
+    public override bool IsReloading()
+    {
+        return currentReloadProgress > 0;
+    }
+
+    public override float GetReloadProgress()
+    {
+        return currentReloadProgress / ReloadSpeed;
+    }
+
+    public override void ResetReload()
+    {
+        currentReloadProgress = ReloadSpeed;
+    }
 
     protected virtual bool IsPossibleToShoot()
     {
-        return currentAmmo > 0 && !IsReloading && fireCooldown <= 0;
+        return currentAmmo > 0 && !IsReloading() && fireCooldown <= 0;
     }
 
     public override void Attack()

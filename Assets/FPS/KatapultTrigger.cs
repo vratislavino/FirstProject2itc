@@ -12,7 +12,7 @@ public class KatapultTrigger : MonoBehaviour
         Debug.Log(collider.name);
         if (player != null )
         {
-            player.Rigidbody.AddForce(Vector3.up* strength);
+            player.Rigidbody.AddForce(Vector3.up * strength, ForceMode.Impulse);
         }
     }
 

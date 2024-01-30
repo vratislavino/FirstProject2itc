@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WeaponController : MonoBehaviour
 {
@@ -17,26 +18,34 @@ public class WeaponController : MonoBehaviour
     [SerializeField]
     private GameObject NormalCrosshair;
 
+    [SerializeField]
+    private Image reloadImage;
+
 
     // Start is called before the first frame update
     void Start()
     {
         weapons = GetComponentsInChildren<Weapon>(true).ToList();
-        ChangeWeapon();
+        ChangeWeapon(weapons.First());
     }
 
-    public void ChangeWeapon()
+    public void ChangeWeapon(Weapon weapon)
     {
         if (currentWeapon != null)
         {
+            if (currentWeapon.IsReloading())
+                currentWeapon.ResetReload();
+            currentWeapon.gameObject.SetActive(false);
             currentWeapon.PossibleToAttackChanged -= OnPossibleToAttackChanged;
         }
 
-        currentWeapon = weapons[0];
+        currentWeapon = weapon;
+        currentWeapon.gameObject.SetActive(true);
         currentWeapon.PossibleToAttackChanged += OnPossibleToAttackChanged;
+        
+        OnPossibleToAttackChanged(!currentWeapon.IsReloading());
+        Debug.Log("Current weapon is" + currentWeapon);
     }
-
-    // TODO: Pøiøadit reference na canvas a vyvolat události v ranged weapon!
 
     private void OnPossibleToAttackChanged(bool isPossibleToAttack)
     {
@@ -46,10 +55,19 @@ public class WeaponController : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {/*
+    {
         if(currentWeapon.UsesControl("Fire1"))
         {
             currentWeapon.Attack();
-        }*/
+        }
+
+        if (currentWeapon.IsReloading())
+        {
+            reloadImage.fillAmount = currentWeapon.GetReloadProgress();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha1)) ChangeWeapon(weapons.ElementAt(0));
+        if (Input.GetKeyDown(KeyCode.Alpha2)) ChangeWeapon(weapons.ElementAt(1));
+        if (Input.GetKeyDown(KeyCode.Alpha3)) ChangeWeapon(weapons.ElementAt(2));
     }
 }
