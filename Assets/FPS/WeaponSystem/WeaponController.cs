@@ -73,7 +73,7 @@ public class WeaponController : MonoBehaviour
             reloadImage.fillAmount = currentWeapon.GetReloadProgress();
         }
 
-        if (Input.GetKey(KeyCode.G))
+        if (Input.GetKeyDown(KeyCode.G))
         {
             ThrowGrenade();
         }

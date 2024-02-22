@@ -19,8 +19,8 @@ public class Grenade : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
-    {
-        StartCoroutine(DelayedExplode());
+    {StartCoroutine(DelayedExplode());
+        
     }
 
     private IEnumerator DelayedExplode()
