@@ -21,6 +21,13 @@ public class WeaponController : MonoBehaviour
     [SerializeField]
     private Image reloadImage;
 
+    [SerializeField]
+    private Grenade grenadePrefab;
+    [SerializeField]
+    private Transform grenadeThrowPosition;
+    [SerializeField]
+    private Transform cameraRef;
+
 
     // Start is called before the first frame update
     void Start()
@@ -66,8 +73,22 @@ public class WeaponController : MonoBehaviour
             reloadImage.fillAmount = currentWeapon.GetReloadProgress();
         }
 
+        if (Input.GetKey(KeyCode.G))
+        {
+            ThrowGrenade();
+        }
+
         if (Input.GetKeyDown(KeyCode.Alpha1)) ChangeWeapon(weapons.ElementAt(0));
         if (Input.GetKeyDown(KeyCode.Alpha2)) ChangeWeapon(weapons.ElementAt(1));
         if (Input.GetKeyDown(KeyCode.Alpha3)) ChangeWeapon(weapons.ElementAt(2));
     }
+
+    private void ThrowGrenade()
+    {
+        var g = Instantiate(grenadePrefab, grenadeThrowPosition.position, grenadeThrowPosition.rotation);
+        var rb = g.GetComponent<Rigidbody>();
+        g.transform.Rotate(Vector3.right, 45, Space.Self);
+        rb.AddForce(grenadeThrowPosition.transform.forward * 10, ForceMode.Impulse);
+    }
+
 }

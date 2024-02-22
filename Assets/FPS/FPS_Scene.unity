@@ -1487,6 +1487,37 @@ Transform:
   m_Father: {fileID: 1918584358}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &962928167
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 962928168}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &962928168
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 962928167}
+  m_LocalRotation: {x: -0.2588186, y: -0, z: -0, w: 0.965926}
+  m_LocalPosition: {x: 0, y: 1.595, z: 0.962}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1918584358}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: -30, y: 0, z: 0}
 --- !u!1 &1101965971
 GameObject:
   m_ObjectHideFlags: 0
@@ -3156,6 +3187,7 @@ Transform:
   - {fileID: 694627851}
   - {fileID: 928740984}
   - {fileID: 449089729}
+  - {fileID: 962928168}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3207,6 +3239,9 @@ MonoBehaviour:
   ReloadCrosshair: {fileID: 1248714869}
   NormalCrosshair: {fileID: 445692687}
   reloadImage: {fileID: 1775866856}
+  grenadePrefab: {fileID: -3197492225863799765, guid: 460d20ac5bca7cc458f4da6f0a61661b, type: 3}
+  grenadeThrowPosition: {fileID: 962928168}
+  cameraRef: {fileID: 1302578365}
 --- !u!1 &2063230717
 GameObject:
   m_ObjectHideFlags: 0
